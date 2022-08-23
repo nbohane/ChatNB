@@ -5,12 +5,12 @@ export const getPostsInFeed = userId => {
   return axios.get(apiUrl + '/posts/feed/' + userId);
 };
 
-export const newPost = (author, text) => {
+export const newPost = (author, text, location) => {
   let json = {
     author: author,
     text: text,
     group_id: 0,
-    // location: 'Portland',
+    location: location,
     // image_url: 'imageUrl',
     // profile_pic: 'profilePic',
   };

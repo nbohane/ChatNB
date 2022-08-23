@@ -16,11 +16,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const NewPostScreen = ({navigation}): Node => {
   const [text, setText] = useState('');
+  const [location, setLocation] = useState('');
 
   const createPost = async () => {
     console.log('text', text);
     const author = await AsyncStorage.getItem('user_id');
-    newPost(author, text)
+    newPost(author, text, location)
       .then(response => {
         console.log(response.data);
         navigation.goBack();
@@ -32,6 +33,10 @@ export const NewPostScreen = ({navigation}): Node => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.appTitle}>Create Post</Text>
+      <CCTextInput
+        placeholder={'location'}
+        onChangeText={value => setLocation(value)}
+      />
       <CCTextInput
         placeholder={'caption'}
         onChangeText={value => setText(value)}

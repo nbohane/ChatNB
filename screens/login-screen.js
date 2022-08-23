@@ -16,13 +16,19 @@ import {CCTextInput} from '../components/cc-text-input';
 export const LoginScreen = ({loginCallBack, navigation}): Node => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const attemptLogin = () => {
+    if (email === '' || password === '') {
+      setError('All fields are required');
+      return;
+    }
     login(email, password)
       .then(response => {
         loginCallBack(response.data);
       })
       .catch(error => {
+        setError(error.response.data.message);
         console.log(error);
       });
   };
@@ -39,6 +45,18 @@ export const LoginScreen = ({loginCallBack, navigation}): Node => {
         placeholder={'password'}
         onChangeText={text => setPassword(text)}
       />
+      {error != '' && (
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{color: 'crimson'}}>{error}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setError('');
+            }}>
+            <Text style={{color: 'crimson', fontWeight: 'bold'}}> Dismiss</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <CCButton text={'Login'} onPress={attemptLogin} />
       <View style={styles.signUpContainer}>
         <Text style={styles.signUpText}>Don't have an account? Sign up </Text>

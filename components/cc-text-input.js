@@ -23,6 +23,7 @@ export const CCTextInput = ({
   return (
     <View style={styles.container}>
       <TextInput
+        autoCapitalize={'none'}
         style={styles.input}
         placeholderTextColor={'black'}
         placeholder={placeholder}

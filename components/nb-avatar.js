@@ -7,7 +7,9 @@ export const NbAvatar = ({uri}): Node => {
     <Image
       style={styles.image}
       source={{
-        uri: uri,
+        uri: uri
+          ? uri
+          : 'https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg',
       }}
     />
   );

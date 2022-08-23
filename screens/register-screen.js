@@ -19,12 +19,17 @@ export const RegisterScreen = ({loginCallBack, navigation}): Node => {
   const [age, setAge] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
   const attemptRegister = () => {
-    console.log('name', name);
-    console.log('email', email);
-    console.log('age', age);
-    console.log('password', password);
+    if (email === '' || password === '' || age === '' || password === '') {
+      setError('All fields are required');
+      return;
+    }
+    if (password != confirmPassword) {
+      setError('Password must match confirm password.');
+      return;
+    }
     register(name, email, age, password)
       .then(response => {
         console.log(response.data);
@@ -55,6 +60,17 @@ export const RegisterScreen = ({loginCallBack, navigation}): Node => {
         placeholder={'confirm password'}
         onChangeText={text => setConfirmPassword(text)}
       />
+      {error != '' && (
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{color: 'crimson'}}>{error}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setError('');
+            }}>
+            <Text style={{color: 'crimson', fontWeight: 'bold'}}> Dismiss</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <CCButton text={'Register'} onPress={attemptRegister} />
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>Already have an account? Log in </Text>
