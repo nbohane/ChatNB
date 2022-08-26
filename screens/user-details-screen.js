@@ -31,7 +31,7 @@ export const UserDetailsScreen = ({navigation, route}): Node => {
     const myId = await AsyncStorage.getItem('user_id');
     getUserById(id, myId)
       .then(response => {
-        console.log(response.data);
+        console.log('user info', response.data);
         setUser(response.data);
       })
       .catch(error => {
@@ -41,7 +41,7 @@ export const UserDetailsScreen = ({navigation, route}): Node => {
   const getUsersPosts = id => {
     getUserPostsByUserId(id)
       .then(response => {
-        console.log(response.data.data);
+        console.log('user posts', response.data.data);
         setPosts(response.data.data);
       })
       .catch(error => {

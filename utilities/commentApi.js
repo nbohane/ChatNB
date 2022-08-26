@@ -5,12 +5,11 @@ export const getAllCommentsFromPost = (postId, userId) => {
   return axios.get(apiUrl + '/comments/post/' + postId + '/' + userId);
 };
 
-export const createComment = (message, post_id) => {
+export const createComment = (message, post_id, user) => {
   let json = {
+    sender: user,
     message: message,
-    sender: 1,
     post_id: post_id,
-    timestamp: new Date(),
   };
   return axios.post(apiUrl + '/comments', json);
 };

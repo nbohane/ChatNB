@@ -16,15 +16,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createCommentLike, deleteCommentLike} from '../utilities/commentApi';
 import {unlikePost} from '../utilities/postApi';
 
-export const Comment = ({comment, navigation}): Node => {
+export const Comment = ({comment, post, navigation}): Node => {
   const [likingComment, setLikingComment] = useState(comment.liked);
   const [numberOfLikes, setNumberOfLikes] = useState(comment.number_of_likes);
+
+  let currentTime = new Date(comment.timestamp);
+  let timestamp = moment(currentTime).fromNow();
 
   const commentLike = async () => {
     setNumberOfLikes(numberOfLikes + 1);
     setLikingComment(true);
-    const userId = await AsyncStorage.getItem('user_id');
-    createCommentLike(userId, comment.id)
+    const author = await AsyncStorage.getItem('user_id');
+    createCommentLike(author, comment.id)
       .then(response => {})
       .catch(error => {
         console.log(error);
@@ -47,22 +50,31 @@ export const Comment = ({comment, navigation}): Node => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <NbAvatar uri={'https://picsum.photos/id/1/200/300'} />
+        <NbAvatar uri={comment.profile_pic} />
         <View style={styles.messageContainer}>
-          <Text style={styles.author}>{comment.author_name}</Text>
           <View style={styles.heartContainer}>
-            <Text style={styles.message}>{comment.message}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('UserDetails', {userId: comment.user});
+              }}>
+              <Text style={styles.author}>{comment.author_name}</Text>
+            </TouchableOpacity>
             <NbSpacer />
+
             <TouchableOpacity
               onPress={likingComment ? commentUnlike : commentLike}>
               <Icon
                 name={likingComment ? 'heart' : 'ios-heart-outline'}
                 size={28}
-                color={colors.dark}
+                color={likingComment ? colors.like : colors.dark}
               />
             </TouchableOpacity>
           </View>
-          <View>
+          <View />
+          <Text style={[styles.message, {marginTop: -8}]}>
+            {comment.message}
+          </Text>
+          <View style={styles.timestampContainer}>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('CommentLikes', {commentId: comment.id});
@@ -72,10 +84,7 @@ export const Comment = ({comment, navigation}): Node => {
                 {numberOfLikes === 1 ? '' : 's'}
               </Text>
             </TouchableOpacity>
-            <NbSpacer />
-            <Text style={styles.timestamp}>
-              {moment(comment.timestamp).format('dddd, MMMM Do YYYY')}
-            </Text>
+            <Text style={styles.timestamp}>{timestamp}</Text>
           </View>
         </View>
       </View>
@@ -104,23 +113,24 @@ const styles = StyleSheet.create({
   message: {
     fontSize: appStyles.primaryTextSize,
     color: colors.dark,
+    marginTop: 1,
   },
   timestamp: {
     fontSize: appStyles.smallTextSize,
-    color: colors.dark,
+    color: colors.gray,
+    paddingLeft: appStyles.elementSpacing,
   },
   heartContainer: {
     display: 'flex',
     flex: 1,
     flexDirection: 'row',
   },
-  // timestampContainer: {
-  //   display: 'flex',
-  //   flex: 1,
-  //   flexDirection: 'row',
-  // },
+  timestampContainer: {
+    flexDirection: 'row',
+    width: '100%',
+  },
   commentLikes: {
-    color: colors.dark,
+    color: colors.gray,
     fontSize: appStyles.smallTextSize,
   },
 });

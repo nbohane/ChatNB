@@ -1,5 +1,5 @@
 import type {Node} from 'react';
-import {getPostsInFeed} from '../utilities/postApi';
+import {getPostsInFeed, newPost} from '../utilities/postApi';
 import {createComment, getAllCommentsFromPost} from '../utilities/commentApi';
 import {
   FlatList,
@@ -39,8 +39,9 @@ export const CommentFeedScreen = ({navigation, route}): Node => {
       });
   };
 
-  const sendComment = () => {
-    createComment(message, postId)
+  const sendComment = async () => {
+    const author = await AsyncStorage.getItem('user_id');
+    createComment(message, postId, author)
       .then(response => {
         setMessage('');
         getComments(postId);

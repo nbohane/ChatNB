@@ -12,7 +12,7 @@ export const User = ({user, navigation}): Node => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <NbAvatar uri={'https://picsum.photos/id/1/200/300'} />
+        <NbAvatar uri={user.image_url} />
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('UserDetails', {userId: user.id});
@@ -34,5 +34,6 @@ const styles = StyleSheet.create({
     fontSize: appStyles.primaryTextSize,
     fontWeight: 'bold',
     color: colors.dark,
+    marginLeft: appStyles.elementSpacing,
   },
 });

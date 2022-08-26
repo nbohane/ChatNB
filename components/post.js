@@ -95,7 +95,7 @@ export const Post = ({post, navigation}): Node => {
               onPress={() => {
                 navigation.navigate('Likes', {postId: post.id});
               }}>
-              <Text style={styles.text}>
+              <Text style={[styles.text, {color: colors.gray}]}>
                 {numberOfLikes} like
                 {numberOfLikes === 1 ? '' : 's'}
               </Text>
@@ -105,14 +105,20 @@ export const Post = ({post, navigation}): Node => {
                 navigation.navigate('Comments', {postId: post.id});
               }}>
               <Text
-                style={[styles.text, {paddingLeft: appStyles.elementSpacing}]}>
+                style={[
+                  styles.text,
+                  {paddingLeft: appStyles.elementSpacing},
+                  {color: colors.gray},
+                ]}>
                 {post.number_of_comments} comment
                 {post.number_of_comments === 1 ? '' : 's'}
               </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.timestampPanel}>
-            <Text style={styles.smallText}>{timestamp}</Text>
+            <Text style={[styles.smallText, {color: colors.gray}]}>
+              {timestamp}
+            </Text>
             <NbSpacer />
             <TouchableOpacity
               onPress={() => {
@@ -135,7 +141,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     paddingHorizontal: appStyles.edgeMargin,
-    paddingVertical: appStyles.elementSpacing,
     paddingLeft: appStyles.elementSpacing,
   },
   authorContainer: {
@@ -149,7 +154,6 @@ const styles = StyleSheet.create({
   middlePanel: {
     flexDirection: 'row',
     width: '100%',
-    paddingVertical: appStyles.elementSpacing,
   },
   caption: {
     flexDirection: 'row',
@@ -166,6 +170,5 @@ const styles = StyleSheet.create({
   timestampPanel: {
     flexDirection: 'row',
     width: '100%',
-    paddingVertical: appStyles.elementSpacing,
   },
 });

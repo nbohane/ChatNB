@@ -4,6 +4,7 @@ export const colors = {
   separator: '#e1e1e1',
   like: '#ef3038',
   light: '#fefefe',
+  gray: '#4C4646',
   dark: '#111111',
 };
 

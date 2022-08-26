@@ -14,6 +14,7 @@ import {appStyles, colors} from '../components/config';
 import {CCButton} from '../components/cc-button';
 import {Post} from '../components/post';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {NbFloatingButton} from '../components/nb-floating-button';
 
 export const FeedScreen = ({navigation}): Node => {
   const [posts, setPosts] = useState([]);
@@ -37,6 +38,7 @@ export const FeedScreen = ({navigation}): Node => {
     <SafeAreaView style={styles.container}>
       <FlatList
         style={{width: '100%'}}
+        contentContainerStyle={{paddingBottom: 86}}
         data={posts}
         onRefresh={getPosts}
         refreshing={false}
@@ -52,9 +54,14 @@ export const FeedScreen = ({navigation}): Node => {
           />
         )}
       />
-      <View style={{paddingHorizontal: appStyles.edgeMargin, width: '100%'}}>
-        <CCButton
-          text={'New Post'}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: appStyles.edgeMargin,
+          right: appStyles.edgeMargin,
+        }}>
+        <NbFloatingButton
+          name={'add'}
           onPress={() => {
             navigation.navigate('NewPost');
           }}

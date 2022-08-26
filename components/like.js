@@ -9,7 +9,7 @@ export const Likes = ({post, navigation}): Node => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <NbAvatar uri={'https://picsum.photos/id/1/200/300'} />
+        <NbAvatar uri={post.image_url} />
         <Text style={styles.author}>steve</Text>
       </View>
       <View>

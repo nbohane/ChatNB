@@ -14,7 +14,7 @@ export const Group = ({group, navigation}): Node => {
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <NbAvatar uri={'https://picsum.photos/id/1/200/300'} />
+          <NbAvatar uri={group.image_url} />
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('GroupDetails', {groupId: group.id});
@@ -41,5 +41,6 @@ const styles = StyleSheet.create({
     fontSize: appStyles.primaryTextSize,
     fontWeight: 'bold',
     color: colors.dark,
+    marginLeft: appStyles.elementSpacing,
   },
 });
